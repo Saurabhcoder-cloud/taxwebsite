@@ -31,6 +31,9 @@ on:
     branches: [ "main" ]
 
 env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
@@ -42,7 +45,6 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
     environment: production
 
@@ -56,14 +58,14 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}  # Ensure valid region (e.g. ap-south-1)
+        aws-region: ${{ secrets.AWS_REGION }}
 
     # ✅ Login to Amazon ECR
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
-    # ✅ Build, tag, and push Docker image to Amazon ECR
+    # ✅ Build and push Docker image
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
@@ -84,7 +86,7 @@ jobs:
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
 
-    # ✅ Deploy updated ECS task definition
+    # ✅ Deploy ECS task definition
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
