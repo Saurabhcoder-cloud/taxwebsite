@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TaxHelp AI Marketing Site
 
 This repository contains the Next.js marketing experience for TaxHelp AI, including the public demo wizard, pricing, security, contact, and legal pages.
@@ -66,3 +67,7 @@ Refer to [`docs/security.md`](docs/security.md) and [`docs/roadmap.md`](docs/roa
 If GitHub blocks a push with a "Binary files are not supported" message, run `npm run check:binaries` to list the offending paths. The command delegates to [`scripts/audit-binaries.mjs`](scripts/audit-binaries.mjs), which inspects the branch history for known binary extensions and points to [`docs/binary-assets.md`](docs/binary-assets.md) for remediation steps.
 
 When the error appears while merging or rebasing with upstream, keep the repository's `.gitattributes` file intact and run `npm run resolve:binaries`. The script checks each conflicted path for the `binary` attribute, stages your branch's copy automatically, and prints the next commands to commit the resolution. Because Git avoids content merges for binary-marked paths, this preserves your branch's files and prevents unsupported-asset warnings on push.
+=======
+# taxwebsite
+USA TAX WEBSITE
+>>>>>>> dc32495d8b01c566282d75a80caf2a321040510a
